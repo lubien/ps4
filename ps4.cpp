@@ -2,8 +2,15 @@
 #include "ps4.h"
 using std::cout;
 using std::endl;
+using std::ostream;
 
 // Public
+
+ostream &operator<<(ostream &output, const Ps4 &ps4) {
+	output << "Ps4 model " << ps4.year;
+
+	return output;
+}
 
 Ps4::Ps4() {
 	setYear(2017);
@@ -40,6 +47,20 @@ void Ps4::addGame(const string &gameName) {
 void Ps4::listGames() {
 	for (int i = 0; i < this->gameCount; i++)
 		cout << "[" << i << "] " << this->gameList[i] << endl;
+}
+
+const Ps4& Ps4::operator=(const Ps4 &right) {
+	this->year = right.year;
+	this->gameCount = right.gameCount;
+
+	delete [] this->gameList;
+
+	this->gameList = new string[right.gameCount];
+
+	for (int i = 0; i < right.gameCount; i++)
+		this->gameList[i] = right.gameList[i];
+
+	return *this;
 }
 
 // Private
