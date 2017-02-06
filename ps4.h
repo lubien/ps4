@@ -1,4 +1,5 @@
 #include <string>
+#include "game.h"
 using std::string;
 using std::ostream;
 

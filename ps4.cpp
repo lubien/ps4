@@ -73,8 +73,10 @@ void Ps4::addGame(const string &gameName) {
 }
 
 void Ps4::listGames() {
-	for (int i = 0; i < this->gameCount; i++)
-		cout << "Game [" << i + 1 << "] " << this->gameList[i] << endl;
+	for (int i = 0; i < this->gameCount; i++) {
+		Game game(this->gameList[i]);
+		cout << game << endl;
+	}
 }
 
 const Ps4& Ps4::operator=(const Ps4 &right) {
