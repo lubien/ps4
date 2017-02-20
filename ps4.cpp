@@ -25,18 +25,20 @@ bool Ps4::operator== (const Ps4 &other) const {
 			return false;
 
 	return true;
-}
+};
 
 // Default constructor
 Ps4::Ps4() {
 	setYear(2017);
 	setupGameList(0);
+	setupDefaultConsoleData();
 };
 
 // Constructor
 Ps4::Ps4(int year) {
 	setYear(year);
 	setupGameList(0);
+	setupDefaultConsoleData();
 };
 
 Ps4::Ps4(const Ps4 &ps4) {
@@ -79,6 +81,18 @@ void Ps4::listGames() {
 	}
 }
 
+void Ps4::turnOn() {
+	Device::turnOn();
+
+	cout << "Loading games progress at " << *this << endl;
+}
+
+void Ps4::turnOff() {
+	cout << "Saving games progress at " << *this << endl;
+
+	Device::turnOff();
+}
+
 const Ps4& Ps4::operator=(const Ps4 &right) {
 	this->year = right.year;
 	this->gameCount = right.gameCount;
@@ -117,4 +131,11 @@ void Ps4::setYear(int y) {
 	} else {
 		year = y;
 	}
+}
+
+void Ps4::setupDefaultConsoleData() {
+	this->company = "Sony";
+	this->generation = 8;
+	this->maxPlayers = 4;
+	this->numPlayers = 0;
 }
