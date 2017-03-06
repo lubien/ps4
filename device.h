@@ -21,6 +21,7 @@ class Device {
 		virtual void turnOff();
 		void plugPowerSupply();
 		void unPlugPowerSupply();
+		bool canOperate() const;
 
 		const Device &operator=(const Device &);
 

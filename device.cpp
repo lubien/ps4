@@ -84,6 +84,10 @@ void Device::unPlugPowerSupply() {
 	this->hasPowerSupply = false;
 }
 
+bool Device::canOperate() const {
+	return this->hasPowerSupply && this->isOn;
+}
+
 const Device& Device::operator=(const Device &right) {
 	this->isOn = right.isOn;
 	this->hasPowerSupply = right.hasPowerSupply;
