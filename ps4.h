@@ -11,7 +11,7 @@ class Ps4 : public Console {
 	friend ostream &operator<<(ostream &, const Ps4 &);
 	bool operator== (const Ps4 &) const;
 	bool operator!= (const Ps4 &other) const {
-		return ! (*this ==other);
+		return ! (static_cast<Ps4>(*this) ==other);
 	}
 
 	public:

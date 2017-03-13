@@ -11,7 +11,7 @@ class Headset : public Device {
 	friend ostream &operator<<(ostream &, const Headset &);
 	bool operator== (const Headset &) const;
 	bool operator!= (const Headset &other) const {
-		return ! (*this == other);
+		return ! (static_cast<Headset>(*this) == other);
 	}
 
 	public:

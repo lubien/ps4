@@ -10,7 +10,7 @@ class Console : public Device {
 	friend ostream &operator<<(ostream &, const Console &);
 	bool operator== (const Console &) const;
 	bool operator!= (const Console &other) const {
-		return ! (*this ==other);
+		return ! (static_cast<Console>(*this) ==other);
 	}
 
 	public:

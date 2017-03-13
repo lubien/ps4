@@ -11,7 +11,7 @@ class Controller : public Device {
 	friend ostream &operator<<(ostream &, const Controller &);
 	bool operator== (const Controller &) const;
 	bool operator!= (const Controller &other) const {
-		return ! (*this == other);
+		return ! (static_cast<Controller>(*this) == other);
 	}
 
 	public:
