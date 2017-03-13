@@ -9,25 +9,23 @@ class Device {
 	friend ostream &operator<<(ostream &, const Device &);
 	bool operator== (const Device &) const;
 	bool operator!= (const Device &other) const {
-		return ! (static_cast<Device>(*this) ==other);
+		return ! ((*this) == other);
 	}
 
 	public:
 		Device();
-		Device(bool, bool);
+		Device(int, bool);
 		Device(const Device &);
 		~Device();
-		virtual void turnOn();
-		virtual void turnOff();
-		void plugPowerSupply();
-		void unPlugPowerSupply();
-		virtual bool canOperate() const;
+		virtual void turnOn() = 0;
+		virtual void turnOff() = 0;
+		virtual bool canOperate() const = 0;
 
 		const Device &operator=(const Device &);
 
-	private:
+	protected:
+		int identifier;
 		bool isOn;
-		bool hasPowerSupply;
 };
 
 #endif

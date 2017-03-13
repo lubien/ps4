@@ -1,5 +1,5 @@
-#ifndef _PS4_H_
-#define _PS4_H_
+#ifndef _XBOX_H_
+#define _XBOX_H_
 
 #include <string>
 #include "device.h"
@@ -8,18 +8,18 @@
 using std::string;
 using std::ostream;
 
-class Ps4 : public Console {
-	friend ostream &operator<<(ostream &, const Ps4 &);
-	bool operator== (const Ps4 &) const;
-	bool operator!= (const Ps4 &other) const {
+class Xbox : public Console {
+	friend ostream &operator<<(ostream &, const Xbox &);
+	bool operator== (const Xbox &) const;
+	bool operator!= (const Xbox &other) const {
 		return ! ((*this) == other);
 	}
 
 	public:
-		Ps4();
-		Ps4(int);
-		Ps4(const Ps4 &);
-		~Ps4();
+		Xbox();
+		Xbox(int);
+		Xbox(const Xbox &);
+		~Xbox();
 		void turnOn();
 		void turnOff();
 		bool canOperate() const;
@@ -32,7 +32,7 @@ class Ps4 : public Console {
 
 		static int showPublishmentYear();
 
-		const Ps4 &operator=(const Ps4 &);
+		const Xbox &operator=(const Xbox &);
 
 	private:
 		static int publishmentYear;

@@ -1,22 +1,20 @@
 #include <iostream>
-#include <vector>
-#include "ps4.h"
+#include "wii.h"
 using std::cout;
 using std::endl;
 using std::ostream;
-using std::vector;
 
-int Ps4::publishmentYear = 2014;
+int Wii::publishmentYear = 2006;
 
 // Public
 
-ostream &operator<<(ostream &output, const Ps4 &ps4) {
-	output << "Ps4 model " << ps4.year;
+ostream &operator<<(ostream &output, const Wii &wii) {
+	output << "Wii " << wii.year;
 
 	return output;
 }
 
-bool Ps4::operator== (const Ps4 &other) const {
+bool Wii::operator== (const Wii &other) const {
 	if (this->year != other.year)
 		return false;
 
@@ -24,7 +22,7 @@ bool Ps4::operator== (const Ps4 &other) const {
 };
 
 // Default constructor
-Ps4::Ps4() {
+Wii::Wii() {
 	this->setupDefaultData();
 	this->setYear(publishmentYear);
 	this->setupPlayerList(0);
@@ -32,47 +30,48 @@ Ps4::Ps4() {
 };
 
 // Constructor
-Ps4::Ps4(int year) {
+Wii::Wii(int year) {
 	this->setupDefaultData();
 	this->setYear(year);
 	this->setupPlayerList(0);
 	this->setupGameList(0);
 };
 
-Ps4::Ps4(const Ps4 &ps4) {
-	this->setYear(ps4.year);
-	this->setupPlayerList(ps4.playerCount);
-	this->setupGameList(ps4.games.size());
+Wii::Wii(const Wii &wii) {
+	this->setYear(wii.year);
+	this->setupPlayerList(wii.playerCount);
+	this->setupGameList(wii.games.size());
 
 	for (int i = 0; i < this->playerCount; i++)
-		this->players[i] = ps4.players[i];
+		this->players[i] = wii.players[i];
 
 	for (size_t i = 0; i < this->games.size(); i++)
-		this->games[i] = ps4.games[i];
+		this->games[i] = wii.games[i];
 }
 
 // Destructor
-Ps4::~Ps4() {
-	cout << "Destroying Ps4 model " << this->year << endl;
+Wii::~Wii() {
+	cout << "Destroying Wii " << this->year << endl;
 }
 
-void Ps4::turnOn() {
+void Wii::turnOn() {
 	cout << "Tuning on " << *this << endl;
-	cout << "Loading games progress at " << *this << endl;
+	cout << "Loading Miis at " << *this << endl;
+	cout << "Loading game progress at " << *this << endl;
 	this->isOn = true;
 }
 
-void Ps4::turnOff() {
-	cout << "Saving games progress at " << *this << endl;
+void Wii::turnOff() {
+	cout << "Saving game progress at " << *this << endl;
 
 	this->isOn = false;
 }
 
-bool Ps4::canOperate() const {
+bool Wii::canOperate() const {
 	return this->isOn;
 }
 
-void Ps4::addPlayer(const string &name) {
+void Wii::addPlayer(const string &name) {
 	this->throwIfCannotOperate();
 
 	string *aux = new string[this->playerCount];
@@ -91,7 +90,7 @@ void Ps4::addPlayer(const string &name) {
 	delete [] aux;
 }
 
-void Ps4::removePlayer(const string &name) {
+void Wii::removePlayer(const string &name) {
 	this->throwIfCannotOperate();
 
 	string *aux = new string[this->playerCount];
@@ -112,7 +111,7 @@ void Ps4::removePlayer(const string &name) {
 	delete [] aux;
 }
 
-void Ps4::listPlayers() const {
+void Wii::listPlayers() const {
 	this->throwIfCannotOperate();
 
 	cout << "Listing Players for " << *this << endl;
@@ -122,42 +121,35 @@ void Ps4::listPlayers() const {
 	}
 }
 
-void Ps4::addGame(const string &name) {
+void Wii::addGame(const string &name) {
 	this->throwIfCannotOperate();
+
+	if (this->games.size() == 1) {
+		throw "Cannot load more than on game at time";
+	}
 
 	Game *game = new Game(name);
 	this->games.push_back(game);
 }
 
-void Ps4::removeGame(const string &name) {
+void Wii::removeGame(const string &name) {
 	this->throwIfCannotOperate();
 
-	int toDelete = -1;
-
-	for (size_t i = 0; i < this->games.size(); i++) {
-		if (this->games.at(i)->getName() == name) {
-			toDelete = i;
-		}
+	if (this->games.at(0)->getName() != name) {
+		throw "This game is not in the console";
 	}
 
-	if (toDelete == -1) {
-		throw "Game doesn't exists";
-	}
-
-	this->games.erase(this->games.begin() + toDelete);
+	this->games.pop_back();
 }
 
-void Ps4::listGames() const {
+void Wii::listGames() const {
 	this->throwIfCannotOperate();
 
-	cout << "Listing Games for " << *this << endl;
-
-	for (size_t i = 0; i < this->games.size(); i++) {
-		cout << (*this->games.at(i)) << endl;
-	}
+	cout << "Current Game for " << *this << endl;
+	cout << (*this->games.at(0)) << endl;
 }
 
-const Ps4& Ps4::operator=(const Ps4 &right) {
+const Wii& Wii::operator=(const Wii &right) {
 	this->year = right.year;
 
 	this->setupGameList(right.games.size());
@@ -168,21 +160,21 @@ const Ps4& Ps4::operator=(const Ps4 &right) {
 	return *this;
 }
 
-int Ps4::showPublishmentYear() {
+int Wii::showPublishmentYear() {
 	return publishmentYear;
 }
 
 // Private
 
-void Ps4::throwIfCannotOperate() const {
+void Wii::throwIfCannotOperate() const {
 	if (!this->canOperate()) {
 		throw "Cannot operate if you don't turn on this device";
 	}
 }
 
-void Ps4::setYear(int y) {
+void Wii::setYear(int y) {
 	if (y < publishmentYear) {
-		cout << "Invalid Ps4 year" << endl;
+		cout << "Invalid Wii year" << endl;
 		cout << "Using publishment year" << endl;
 		this->year = publishmentYear;
 	} else {
@@ -190,7 +182,7 @@ void Ps4::setYear(int y) {
 	}
 }
 
-void Ps4::setupPlayerList(int size) {
+void Wii::setupPlayerList(int size) {
 	if (size < 1) {
 		size = 0;
 	}
@@ -199,7 +191,7 @@ void Ps4::setupPlayerList(int size) {
 	this->players = new string[size];
 }
 
-void Ps4::setupGameList(int size) {
+void Wii::setupGameList(int size) {
 	if (size < 1) {
 		size = 0;
 	}
@@ -208,12 +200,12 @@ void Ps4::setupGameList(int size) {
 	this->games = games;
 }
 
-void Ps4::setupDefaultData() {
+void Wii::setupDefaultData() {
 	this->identifier = 444444;
 	this->isOn = false;
-	this->company = "Sony";
-	this->consoleName = "PlayStation 4";
-	this->generation = 8;
+	this->company = "Nintendo ";
+	this->consoleName = "Wii";
+	this->generation = 7;
 	this->playerCount = 0;
 	this->setupGameList(0);
 	this->setupPlayerList(0);

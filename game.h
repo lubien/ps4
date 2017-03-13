@@ -1,3 +1,6 @@
+#ifndef _GAME_H
+#define _GAME_H
+
 #include <string>
 using std::string;
 using std::ostream;
@@ -10,11 +13,16 @@ class Game {
 	}
 
 	public:
+		Game();
 		Game(const string &);
-		/* ~Game(); */
+		Game(const Game &);
+		~Game();
+		string getName();
 
 		const Game &operator=(const Game &);
 
 	private:
 		string name;
 };
+
+#endif
